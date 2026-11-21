@@ -12,7 +12,7 @@ pd.read_sql("""SELECT * FROM sqlite_master""", conn)
 # STEP 1
 # Replace None with your code
 df_boston = pd.read_sql("""
-  SELECT e.firstName, e.lastName, e.jobTitle
+  SELECT e.firstName, e.lastName
   FROM employees e
   JOIN offices o ON e.officeCode = o.officeCode
   WHERE o.city = 'Boston';
@@ -122,7 +122,10 @@ df_under_20 = pd.read_sql("""
     JOIN orders o2 ON od2.orderNumber = o2.orderNumber
     GROUP BY od2.productCode
     HAVING COUNT(DISTINCT o2.customerNumber) < 20
-  );
+  )
+  ORDER BY e.employeeNumber ASC;
   """, conn)
+
+print(df_under_20.to_string(index=False))
 
 conn.close()
